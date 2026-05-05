@@ -100,27 +100,53 @@
 
     // Vendor carousel
     $('.vendor-carousel').owlCarousel({
-        loop: true,
+        loop: false,          // IMPORTANT: prevents duplication issue
         margin: 45,
-        dots: false,
-        loop: true,
+        dots: true,
         autoplay: true,
+        center: true,
         smartSpeed: 1000,
         responsive: {
-            0:{
-                items:2
+            0: {
+                items: 2
             },
-            576:{
-                items:4
+            576: {
+                items: 4
             },
-            768:{
-                items:6
+            768: {
+                items: 6
             },
-            992:{
-                items:8
+            992: {
+                items: 8
             }
         }
     });
     
+
+   // Portfolio isotope and filter
+ $(document).ready(function () {
+
+    // INIT isotope AFTER all images load
+    var $grid = $('.portfolio-container').imagesLoaded(function () {
+        $grid.isotope({
+            itemSelector: '.portfolio-item',
+            layoutMode: 'fitRows'
+        });
+    });
+
+    // FILTER CLICK
+    $('#portfolio-flters li').on('click', function () {
+        $('#portfolio-flters li').removeClass('active');
+        $(this).addClass('active');
+
+        var filterValue = $(this).attr('data-filter');
+        $grid.isotope({
+            filter: filterValue
+        });
+    });
+
+});
+
+
 })(jQuery);
 
